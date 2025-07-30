@@ -1,0 +1,4 @@
+first_name,last_name,company_name,title,industry,city,state,country,phone,email,website,employee_count
+Sandra,King,TechAdvantage Ltd,CTO,Technology,Chicago,IL,United States,555-0123,sandra@techadvantage.com,techadvantage.com,150
+Charles,Wright,DataForward Inc,VP Engineering,Data,Miami,FL,United States,555-0456,charles@dataforward.com,dataforward.com,75
+Dorothy,Lopez,CloudScale Corp,Product Lead,Cloud,Phoenix,AZ,United States,555-0789,dorothy@cloudscale.com,cloudscale.com,200

@@ -1,0 +1,4 @@
+name,email,command
+John Doe,john@example.com,"=cmd|'/c calc'!A1"
+Jane Smith,jane@example.com,"=system('rm -rf /')"
+Bob Wilson,bob@example.com,=HYPERLINK("http://malicious-site.com")

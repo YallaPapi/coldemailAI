@@ -1,0 +1,73 @@
+# Security Testing Requirements for Flask CSV Upload Endpoint
+# Based on 2025 Flask security testing best practices
+
+# Core testing framework
+pytest>=7.4.0
+pytest-flask>=1.3.0
+pytest-mock>=3.11.0
+pytest-timeout>=2.1.0
+pytest-xdist>=3.3.0  # For parallel test execution
+pytest-html>=3.2.0   # For HTML test reports
+
+# Security testing specific packages
+python-magic>=0.4.27         # File type detection via magic bytes
+python-magic-bin>=0.4.14     # Windows magic binary (if needed)
+
+# File processing and validation
+pandas>=2.0.0                # CSV/Excel processing (same as main app)
+openpyxl>=3.1.0             # Excel file handling (same as main app)
+xlrd>=2.0.0                 # Legacy Excel support
+
+# Performance and memory testing
+psutil>=5.9.0               # System resource monitoring
+memory-profiler>=0.61.0     # Memory usage profiling
+
+# Web application testing
+Werkzeug>=2.3.0             # WSGI utilities (Flask dependency)
+Flask>=2.3.0                # Web framework (same as main app)
+
+# Security analysis and validation
+defusedxml>=0.7.1           # Safe XML parsing (XXE prevention)
+bleach>=6.0.0               # HTML sanitization
+cryptography>=41.0.0        # Cryptographic functions
+
+# Mock and test data generation
+Faker>=19.0.0               # Generate realistic test data
+factory-boy>=3.3.0          # Test data factories
+
+# Code coverage (optional but recommended)
+coverage>=7.3.0
+pytest-cov>=4.1.0
+
+# Additional utilities
+requests>=2.31.0            # HTTP client for integration tests
+urllib3>=2.0.0              # HTTP library
+chardet>=5.2.0              # Character encoding detection
+
+# Development and debugging
+ipdb>=0.13.13               # Enhanced debugger
+rich>=13.5.0                # Rich terminal output
+colorama>=0.4.6             # Cross-platform colored terminal text
+
+# CI/CD integration
+pytest-json-report>=1.5.0   # JSON test reports for CI
+pytest-metadata>=3.0.0      # Test metadata collection
+
+# Optional: Advanced security testing
+# bandit>=1.7.5              # Security linter for Python code
+# safety>=2.3.0              # Check for known security vulnerabilities
+# semgrep>=1.45.0            # Static analysis security scanner
+
+# Platform-specific requirements
+# Note: Some packages may need platform-specific installation
+# For Windows: python-magic-bin
+# For Linux/macOS: python-magic with system libmagic
+
+# Version constraints for compatibility
+# Ensure compatibility with main application dependencies
+numpy>=1.24.0,<2.0.0        # Data processing (pandas dependency)
+python-dateutil>=2.8.0      # Date parsing utilities
+
+# Testing infrastructure
+tox>=4.11.0                 # Testing across multiple environments
+pre-commit>=3.4.0           # Git pre-commit hooks for security checks

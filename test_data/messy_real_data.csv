@@ -1,0 +1,51 @@
+First Name, Last Name ,COMPANY_NAME,Job Title,industry,City,State,Country
+  ,Scott,"""Apex Marketing, LLC""",Marketing Director,business services,Austin,TX,United States
+,Baker,MedTech Innovations  ,Marketing Manager,business services,Charlotte,NC,
+Carol,Garcia,Apex Marketing,Account Manager,Logistics,Milwaukee,WI,United States
+  Anthony,Adams,SecureGuard Inc,CTO,Security,Austin,TX,United States
+Anthony,,AeroTech Aerospace,CTO,Retail,Los Angeles,CA,United States
+Karen,Thompson,"""SteelWorks Corp, LLC""",Operations Manager,food & beverage,Miami,FL,United States
+,Rodriguez,Digital Frontier,General Manager,pharmaceuticals,Denver,CO,United States
+  William,,FastTrack Logistics,Sales Manager,Business Services,Seattle,WA,United States
+Lisa,Brown,"""InnovateLab, LLC""",Senior Vice President,pharmaceuticals,Boston,MA,United States
+,Chen,AeroTech Aerospace,Operations Director,construction,Charlotte,NC,
+  Lisa,Williams,EliteCore Systems,Product Manager,telecommunications,Austin,TX,United States
+David,Robinson,"""EliteCore Systems, LLC""",Senior Vice President,agriculture,San Jose,CA,United States
+Karen,Taylor,Apex Marketing,Business Development Manager,security,Detroit,MI,United States
+,Anderson,Digital Frontier  ,Business Development Manager,transportation,Fort Worth,TX,United States
+Matthew,Lee,DataSync Corp  ,Regional Manager,Agriculture,Sacramento,CA,
+  Carol,Young,FinanceFirst Corp,President,food & beverage,Chicago,IL,United States
+Michael,King,DataSync Corp  ,President,Construction,Sacramento,CA,United States
+,Moore,AutoParts Direct,Vice President,Pharmaceuticals,Austin,TX,
+  Matthew,Scott,SolarMax Energy,Senior Vice President,Security,Seattle,WA,United States
+  Sandra,Green,BlueSky Ventures  ,CTO,Food & Beverage,Columbus,OH,United States
+,Miller,"""BlueSky Ventures, LLC""",Vice President,Telecommunications,El Paso,TX,United States
+  Karen,Baker,CloudNet Systems,Founder,Pharmaceuticals,Phoenix,AZ,United States
+Sarah,Wilson,NexGen Solutions,Chief Executive Officer,food & beverage,Memphis,TN,United States
+Robert,Rodriguez,BuildSmart Construction  ,CEO,Manufacturing,Memphis,TN,United States
+  Karen,Baker,"""SteelWorks Corp, LLC""",Product Manager,automotive,San Antonio,TX,
+Christopher,Taylor,RapidScale Technologies,Regional Manager,finance,Los Angeles,CA,United States
+David,,FastTrack Logistics,CTO,aerospace,San Diego,CA,United States
+Helen,,Horizon Manufacturing,Senior Vice President,logistics,Jacksonville,FL,United States
+,Young,AeroTech Aerospace,Operations Manager,Pharmaceuticals,Portland,OR,United States
+Nancy,Moore,EcoGreen Energy  ,Operations Manager,Food & Beverage,Philadelphia,PA,United States
+Sandra,Anderson,BrightStar Consulting,Senior Vice President,security,Atlanta,GA,United States
+  Michelle,Young,AutoParts Direct,Director of Operations,retail,Chicago,IL,United States
+,Allen,"""FastTrack Logistics, LLC""",Founder,Telecommunications,Columbus,OH,United States
+,Anderson,FinanceFirst Corp  ,Chief Executive Officer,Real Estate,New York,NY,United States
+Amanda,Hall,NexGen Solutions,President,Business Services,Charlotte,NC,United States
+Helen,Hall,Quantum Dynamics,Chief Technology Officer,Software,Phoenix,AZ,United States
+Susan,Martin,"""SolarMax Energy, LLC""",Operations Manager,retail,El Paso,TX,United States
+Donald,Martin,Apex Marketing,Chief Executive Officer,Consulting,Nashville,TN,United States
+Susan,Hall,"""InnovateLab, LLC""",Sales Manager,healthcare,Denver,CO,United States
+  Michael,Scott,Quantum Dynamics,Business Development Manager,Aerospace,Seattle,WA,United States
+Daniel,Martin,DataSync Corp  ,Vice President Sales,Telecommunications,Chicago,IL,United States
+Patricia,Wright,"""SecureGuard Inc  , LLC""",Senior Vice President,Healthcare,Memphis,TN,
+Donna,Moore,BlueSky Ventures,Regional Manager,Agriculture,Nashville,TN,United States
+Marcus,Chen,AeroTech Aerospace  ,Regional Manager,Agriculture,Baltimore,MD,United States
+Robert,Adams,NexGen Solutions,Chief Executive Officer,Technology,Boston,MA,United States
+Amanda,Davis,FinanceFirst Corp,Senior Sales Representative,Security,Los Angeles,CA,United States
+Michelle,Robinson,SecureGuard Inc,Division Manager,Transportation,Austin,TX,United States
+Matthew,,AutoParts Direct  ,CEO,aerospace,Dallas,TX,United States
+Steven,Garcia,"""BuildSmart Construction, LLC""",Marketing Manager,Transportation,San Jose,CA,
+,Rodriguez,"""AeroTech Aerospace  , LLC""",CEO,Business Services,Memphis,TN,United States

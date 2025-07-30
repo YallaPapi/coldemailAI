@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="en" data-bs-theme="dark">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AI Cold Email Generator</title>
+    <link href="https://cdn.replit.com/agent/bootstrap-agent-dark-theme.min.css" rel="stylesheet">
+</head>
+<body>
+    <div class="container py-5">
+        <div class="row justify-content-center">
+            <div class="col-lg-8">
+                <div class="text-center mb-5">
+                    <h1 class="display-4 fw-bold">AI Cold Email Generator</h1>
+                    <p class="lead text-muted">Upload your spreadsheet and map your columns to generate personalized emails</p>
+                </div>
+
+                <!-- Flash Messages -->
+                {% with messages = get_flashed_messages(with_categories=true) %}
+                    {% if messages %}
+                        {% for category, message in messages %}
+                            <div class="alert alert-{{ 'danger' if category == 'error' else 'success' }} alert-dismissible fade show" role="alert">
+                                {{ message }}
+                                <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+                            </div>
+                        {% endfor %}
+                    {% endif %}
+                {% endwith %}
+
+                <!-- Upload Form -->
+                <div class="card shadow-lg">
+                    <div class="card-body p-5">
+                        <h3 class="card-title mb-4">Step 1: Upload Your Lead Spreadsheet</h3>
+                        
+                        <form action="/upload" method="post" enctype="multipart/form-data" id="uploadForm">
+                            <div class="mb-4">
+                                <label for="file" class="form-label">Select Excel or CSV file</label>
+                                <input type="file" 
+                                       class="form-control form-control-lg" 
+                                       name="file" 
+                                       id="file"
+                                       accept=".xlsx,.xls,.csv"
+                                       required>
+                                <div class="form-text">
+                                    Supported: Excel (.xlsx, .xls) and CSV files. Max: 16MB
+                                </div>
+                            </div>
+                            
+                            <div class="d-grid">
+                                <button type="submit" class="btn btn-primary btn-lg" id="generateBtn">
+                                    Upload and Map Columns
+                                </button>
+                                <div id="loadingState" style="display: none;" class="text-center">
+                                    <div class="spinner-border" role="status">
+                                        <span class="visually-hidden">Loading...</span>
+                                    </div>
+                                    <p class="mt-2">Processing your file...</p>
+                                </div>
+                            </div>
+                        </form>
+                        
+                        <div class="mt-4">
+                            <h5>What happens next?</h5>
+                            <ol class="text-muted">
+                                <li>Upload your spreadsheet with lead data</li>
+                                <li>Map your columns to our system fields (name, company, title, etc.)</li>
+                                <li>Generate personalized cold emails with AI</li>
+                                <li>Download your results as an Excel file</li>
+                            </ol>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="{{ url_for('static', filename='js/app.js') }}"></script>
+</body>
+</html>

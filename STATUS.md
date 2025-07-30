@@ -1,0 +1,1 @@
+# ColdEmailAI MVP Status

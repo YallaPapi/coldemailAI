@@ -1,0 +1,62 @@
+<context>
+# Overview  
+The ColdEmailAI web application has been developed and needs comprehensive testing to ensure it works correctly with real production data. The application processes CSV files with business leads through a web interface, applies column mapping, and generates personalized emails. Testing must validate that all functionality works end-to-end with actual business data (not demo/test data).
+
+# Core Features  
+- File Upload: Web interface accepts CSV/Excel files up to 16MB
+- Column Mapping: Users map their CSV columns to required fields (First Name, Company, Title, etc.)
+- Chunked Processing: Backend processes files in chunks to prevent memory crashes
+- Email Generation: AI generates personalized cold emails using OpenAI API
+- Results Export: Users download generated emails as Excel files
+- Security Validation: Only legitimate file types accepted, malicious files blocked
+
+# User Experience  
+- User personas: Business development professionals uploading lead lists
+- Key user flows: Upload CSV → Map columns → Generate emails → Download results
+- UI/UX considerations: Clear error messages, loading states, progress indicators
+</context>
+<PRD>
+# Technical Architecture  
+- Frontend: Flask web application with Bootstrap UI
+- Backend: Python with pandas for CSV processing, OpenAI API for email generation
+- File Processing: Chunked reading with configurable chunk size (1000 rows)
+- Security: File type validation, size limits, secure filename handling
+- Error Handling: Comprehensive logging and user feedback
+
+# Development Roadmap  
+## Phase 1: Core Functionality Testing
+- Validate file upload mechanism works with real CSV files
+- Test column mapping interface with actual business data
+- Verify chunked processing prevents memory crashes
+- Confirm email generation produces quality outputs
+
+## Phase 2: Error Handling and Edge Cases
+- Test error scenarios (invalid files, corrupt data, API failures)
+- Validate security measures block malicious uploads
+- Test large file processing (2000+ rows)
+- Verify graceful degradation when issues occur
+
+## Phase 3: End-to-End Workflow Validation
+- Complete user journey testing with real business scenarios
+- Performance testing under realistic loads
+- Integration testing with OpenAI API
+- Results export functionality validation
+
+# Logical Dependency Chain
+1. Web server startup and basic connectivity (foundation)
+2. File upload mechanism validation (core functionality)
+3. CSV processing and column mapping (data handling)
+4. Email generation workflow (AI integration)
+5. Results export and download (completion)
+6. Error handling and security validation (robustness)
+
+# Risks and Mitigations  
+- Technical challenges: "No file selected" errors, memory crashes, API failures
+- MVP testing approach: Start with known working CSV files, gradually increase complexity
+- Resource constraints: Use mock email generation where API costs are prohibitive
+
+# Appendix  
+- Test data available: production_test.csv (5 real companies), large_test.csv (2000 records)
+- Known issues: Current "no file selected" error needs investigation
+- Environment setup: OpenAI API key configured, Flask server needs proper startup
+</PRD>

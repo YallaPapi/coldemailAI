@@ -1,0 +1,85 @@
+# Pre-commit Hook Configuration for AST Syntax Validation
+# Task Reference: 13.4 - Integrate AST Checker into Pytest Workflows
+# 
+# This configuration ensures AST syntax validation runs before commits,
+# catching dictionary syntax errors early in the development workflow.
+
+repos:
+  # Standard Python code quality checks
+  - repo: https://github.com/pre-commit/pre-commit-hooks
+    rev: v4.4.0
+    hooks:
+      - id: trailing-whitespace
+      - id: end-of-file-fixer
+      - id: check-yaml
+      - id: check-added-large-files
+      - id: check-merge-conflict
+      - id: debug-statements
+      - id: check-docstring-first
+
+  # Python syntax and import checking
+  - repo: https://github.com/PyCQA/flake8
+    rev: 6.0.0
+    hooks:
+      - id: flake8
+        additional_dependencies: [flake8-docstrings]
+        args: ['--max-line-length=100', '--ignore=E203,W503,D100,D101,D102,D103,D104,D105']
+
+  # AST-based syntax validation (local hook)
+  - repo: local
+    hooks:
+      - id: ast-syntax-validation
+        name: AST Syntax Validation for Dictionary Errors
+        entry: python scripts/ast_syntax_validator.py
+        language: python
+        files: '^tests/.*\.py$'
+        args: ['tests', '--pattern', 'test_*.py']
+        pass_filenames: false
+        always_run: false
+        stages: [commit, push]
+        verbose: true
+        description: 'Validate Python AST for dictionary syntax errors in test files'
+
+      # Alternative implementation that processes individual files
+      - id: ast-syntax-validation-individual
+        name: AST Validation (Individual Files)
+        entry: python scripts/ast_syntax_validator_individual.py
+        language: python
+        files: '^tests/.*\.py$'
+        pass_filenames: true
+        always_run: false
+        stages: [commit]
+        description: 'Validate individual test files for dictionary syntax errors'
+
+  # Python code formatting (optional but recommended)
+  - repo: https://github.com/psf/black
+    rev: 23.3.0
+    hooks:
+      - id: black
+        args: ['--line-length=100']
+        language_version: python3
+
+  # Import sorting
+  - repo: https://github.com/PyCQA/isort
+    rev: 5.12.0
+    hooks:
+      - id: isort
+        args: ['--profile=black', '--line-length=100']
+
+# Configuration for the hooks
+default_stages: [commit, push]
+default_language_version:
+  python: python3
+
+# Minimum version of pre-commit required
+minimum_pre_commit_version: '2.15.0'
+
+# Additional configuration
+ci:
+  autofix_commit_msg: 'fix: auto-fix pre-commit issues'
+  autofix_prs: true
+  autoupdate_branch: ''
+  autoupdate_commit_msg: 'chore: pre-commit autoupdate'
+  autoupdate_schedule: weekly
+  skip: []
+  submodules: false

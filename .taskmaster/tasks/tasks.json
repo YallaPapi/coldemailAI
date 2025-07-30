@@ -1,0 +1,784 @@
+{
+  "master": {
+    "tasks": [
+      {
+        "id": 1,
+        "title": "Setup Production Testing Environment",
+        "description": "Initialize pytest testing framework and configure testing infrastructure for ColdEmailAI production validation",
+        "details": "Install pytest, httpx for FastAPI testing, configure test database/storage, setup memory monitoring tools (psutil), create test configuration files. Use TaskMaster research to identify latest pytest best practices for FastAPI applications. Setup test directory structure following Context7 patterns.",
+        "testStrategy": "Verify pytest runs successfully, test configuration loads properly, memory monitoring captures baseline metrics, and all testing dependencies are available",
+        "priority": "high",
+        "dependencies": [],
+        "status": "done",
+        "subtasks": []
+      },
+      {
+        "id": 2,
+        "title": "Create Real Business Test Data Files",
+        "description": "Generate authentic business CSV files with realistic company data, employee information, and various data quality scenarios",
+        "details": "Create test_data/ directory with: small_business_leads.csv (50-100 rows), enterprise_leads.csv (2000+ rows), messy_real_data.csv (inconsistent formatting), malicious_files/ with security test files, edge_cases/ with unicode and special character data. Use real company names, industries, job titles. Include mixed case headers, extra spaces, empty fields.",
+        "testStrategy": "Validate CSV files are properly formatted, contain realistic business data, cover all edge cases specified in PRD, and malicious files are properly crafted for security testing",
+        "priority": "high",
+        "dependencies": [
+          1
+        ],
+        "status": "done",
+        "subtasks": []
+      },
+      {
+        "id": 3,
+        "title": "Implement CSV Upload Endpoint Tests",
+        "description": "Create comprehensive tests for the FastAPI CSV upload endpoint with various file types and sizes",
+        "details": "Test upload endpoint with legitimate CSV files, malicious files, oversized files, wrong file types. Use httpx TestClient for FastAPI endpoint testing. Test file validation, security measures, error responses. Monitor memory usage during uploads. Follow Context7 patterns for test structure.",
+        "testStrategy": "Verify legitimate files upload successfully, malicious files are blocked with clear error messages, memory usage remains constant, and all security validations work correctly",
+        "priority": "high",
+        "dependencies": [
+          1,
+          2
+        ],
+        "status": "done",
+        "subtasks": []
+      },
+      {
+        "id": 4,
+        "title": "Test Column Mapping Functionality",
+        "description": "Validate automatic column detection and mapping for various CSV header formats and business data structures",
+        "details": "Test column mapping with standard business headers (company_name, first_name, last_name, title, industry, city, state), mixed case variations, headers with spaces, special characters. Test mapping accuracy, fallback mechanisms, error handling for unmappable columns.",
+        "testStrategy": "Confirm 100% accuracy for standard business columns, proper handling of header variations, graceful degradation for unmappable columns, and clear feedback for mapping issues",
+        "priority": "medium",
+        "dependencies": [
+          2,
+          3
+        ],
+        "status": "done",
+        "subtasks": [
+          {
+            "id": 1,
+            "title": "Prepare Diverse CSV Test Files",
+            "description": "Create a comprehensive set of CSV files featuring standard business headers, mixed case variations, headers with spaces, and special characters to simulate real-world data scenarios.",
+            "dependencies": [],
+            "details": "Include files with headers such as 'company_name', 'first_name', 'last_name', 'title', 'industry', 'city', 'state', as well as variations like 'Company Name', 'FIRST_NAME', 'last name', and headers with special characters.",
+            "status": "done",
+            "testStrategy": "Verify that all required header variations are represented and files are syntactically valid for import."
+          },
+          {
+            "id": 2,
+            "title": "Validate Automatic Column Detection",
+            "description": "Test the system's ability to automatically detect and recognize columns from the prepared CSV files, regardless of header formatting or character variations.",
+            "dependencies": [
+              "4.1"
+            ],
+            "details": "Run the column mapping functionality on each test file and log which headers are detected and how they are interpreted.",
+            "status": "done",
+            "testStrategy": "Confirm that all standard business columns are correctly identified across all header formats."
+          },
+          {
+            "id": 3,
+            "title": "Assess Mapping Accuracy and Fallback Mechanisms",
+            "description": "Evaluate the accuracy of column-to-field mapping and the effectiveness of fallback mechanisms when headers are ambiguous or non-standard.",
+            "dependencies": [
+              "4.2"
+            ],
+            "details": "Test mapping logic with intentionally ambiguous or unmappable headers to observe fallback behavior and ensure correct mapping where possible.",
+            "status": "done",
+            "testStrategy": "Check that correct fields are mapped for all standard and variant headers, and that fallback logic is triggered appropriately for unmappable columns."
+          },
+          {
+            "id": 4,
+            "title": "Test Error Handling for Unmappable Columns",
+            "description": "Verify that the system gracefully handles unmappable or missing columns, providing clear feedback and avoiding system failures.",
+            "dependencies": [
+              "4.3"
+            ],
+            "details": "Introduce CSV files with missing, extra, or completely unrecognized headers and observe error messages and system responses.",
+            "status": "done",
+            "testStrategy": "Ensure that errors are reported clearly, unmappable columns are flagged, and the system does not crash or misbehave."
+          },
+          {
+            "id": 5,
+            "title": "Document Results and Mapping Issues",
+            "description": "Record the outcomes of all mapping tests, including successes, failures, and edge cases, to inform future improvements and provide traceability.",
+            "dependencies": [
+              "4.4"
+            ],
+            "details": "Compile a report detailing mapping accuracy, fallback activations, error handling quality, and any recurring issues with specific header formats.",
+            "status": "done",
+            "testStrategy": "Review documentation for completeness and clarity, ensuring all test scenarios and results are covered."
+          }
+        ]
+      },
+      {
+        "id": 5,
+        "title": "Implement Large File Processing Tests",
+        "description": "Test chunked processing capabilities with enterprise-scale CSV files to validate memory management and performance",
+        "details": "Test processing of 2000+ row CSV files using chunked processing. Monitor memory usage throughout processing to ensure constant memory consumption. Measure processing speed (target >1000 leads/second). Test data integrity across chunks. Implement performance benchmarking.",
+        "testStrategy": "Validate constant memory usage regardless of file size, processing speed meets >1000 leads/second target, no data loss across chunks, and complete processing within 30 seconds for 2000-row files",
+        "priority": "high",
+        "dependencies": [
+          2,
+          3
+        ],
+        "status": "done",
+        "subtasks": []
+      },
+      {
+        "id": 6,
+        "title": "Test Email Generation with Real Data",
+        "description": "Validate email generation quality and personalization using authentic business lead data",
+        "details": "Test email generation with real company names, contact names, industries, job titles. Validate personalization accuracy (100% correct company/name/title insertion). Test handling of missing data fields, special characters in names/companies. Assess email quality and professionalism.",
+        "testStrategy": "Confirm 100% accurate personalization, professional email quality, proper handling of missing data, correct special character processing, and no template rendering errors",
+        "priority": "high",
+        "dependencies": [
+          2,
+          4
+        ],
+        "status": "done",
+        "subtasks": [
+          {
+            "id": 1,
+            "title": "Prepare Authentic Business Lead Test Data",
+            "description": "Collect and curate a dataset containing real company names, contact names, industries, and job titles, ensuring inclusion of entries with missing fields and special characters.",
+            "dependencies": [],
+            "details": "Source or anonymize real business lead data, ensuring a representative mix of complete and incomplete records, and include edge cases such as names with accents, hyphens, or non-Latin characters.",
+            "status": "done",
+            "testStrategy": "Verify dataset diversity by confirming presence of all required fields, missing data scenarios, and special character cases."
+          },
+          {
+            "id": 2,
+            "title": "Generate Emails Using Test Data",
+            "description": "Run the email generation system using the prepared dataset to produce personalized emails for each lead.",
+            "dependencies": [
+              "6.1"
+            ],
+            "details": "Feed the curated test data into the email generation engine, ensuring all records are processed and emails are generated for each entry.",
+            "status": "done",
+            "testStrategy": "Confirm that an email is generated for every input record, including those with missing fields or special characters."
+          },
+          {
+            "id": 3,
+            "title": "Validate Personalization Accuracy",
+            "description": "Check that each generated email correctly inserts company name, contact name, industry, and job title, and handles missing fields gracefully.",
+            "dependencies": [
+              "6.2"
+            ],
+            "details": "Compare generated emails against input data to ensure 100% accuracy of personalized fields and verify that missing data does not cause template errors.",
+            "status": "done",
+            "testStrategy": "Automate field-by-field validation and flag any mismatches or template rendering issues."
+          },
+          {
+            "id": 4,
+            "title": "Assess Handling of Special Characters and Missing Data",
+            "description": "Evaluate how the email generation system processes names and company fields with special characters, and how it manages missing or incomplete data.",
+            "dependencies": [
+              "6.2"
+            ],
+            "details": "Review generated emails for correct rendering of special characters and appropriate fallback or messaging when data is missing.",
+            "status": "done",
+            "testStrategy": "Manually and programmatically inspect emails for encoding issues, broken templates, or unprofessional placeholders."
+          },
+          {
+            "id": 5,
+            "title": "Review Email Quality and Professionalism",
+            "description": "Assess the overall quality, tone, and professionalism of the generated emails to ensure they meet business communication standards.",
+            "dependencies": [
+              "6.3",
+              "6.4"
+            ],
+            "details": "Evaluate email content for clarity, grammar, tone, and formatting, ensuring that personalization does not compromise professionalism.",
+            "status": "done",
+            "testStrategy": "Conduct peer review and use automated tools to check for grammar, tone, and formatting issues; document findings and required improvements."
+          }
+        ]
+      },
+      {
+        "id": 7,
+        "title": "Implement Security Validation Tests",
+        "description": "Test security measures against malicious files and injection attacks to ensure application safety",
+        "status": "done",
+        "dependencies": [
+          2,
+          3
+        ],
+        "priority": "high",
+        "details": "Comprehensive security validation test suite has been implemented and executed. Testing covers CSV formula injection detection (=cmd, +cmd, -cmd, @SUM, =HYPERLINK, =WEBSERVICE), executable masquerading detection, file size limit enforcement, path traversal prevention, content-type spoofing resistance, Unicode bypass prevention, concurrent upload security, security error message safety, and session isolation security. Key security vulnerability identified: application allows binary files with .csv extension.",
+        "testStrategy": "Security test results: 100% CSV injection protection, 100% file size limit enforcement, 100% path traversal prevention, 75% content-type spoofing resistance, 70% Unicode bypass prevention, 100% concurrent attack handling, 80% safe error messaging. Critical finding: Binary file content validation needs enhancement for production readiness.",
+        "subtasks": [
+          {
+            "id": 1,
+            "title": "Implement CSV Formula Injection Detection Tests",
+            "description": "Test protection against CSV formula injection attacks using modern payloads",
+            "status": "done",
+            "dependencies": [],
+            "details": "Comprehensive testing of CSV injection protection with payloads including =cmd, +cmd, -cmd, @SUM, =HYPERLINK, =WEBSERVICE. Achieved 100% effectiveness against all tested injection vectors.",
+            "testStrategy": ""
+          },
+          {
+            "id": 2,
+            "title": "Implement Executable Masquerading Detection Tests",
+            "description": "Test detection of executable files disguised as CSV files",
+            "status": "done",
+            "dependencies": [],
+            "details": "Testing revealed critical security vulnerability: application currently allows binary files with .csv extension to be uploaded. This represents a significant security risk that needs immediate attention.",
+            "testStrategy": ""
+          },
+          {
+            "id": 3,
+            "title": "Implement File Size Limit Security Tests",
+            "description": "Test enforcement of file size limits and performance under large file attacks",
+            "status": "done",
+            "dependencies": [],
+            "details": "Successfully tested file size limit enforcement. Application properly blocks files over 17MB within 5 seconds, providing 100% effective protection against oversized file attacks.",
+            "testStrategy": ""
+          },
+          {
+            "id": 4,
+            "title": "Implement Path Traversal Prevention Tests",
+            "description": "Test protection against path traversal attacks in file uploads",
+            "status": "done",
+            "dependencies": [],
+            "details": "Verified 100% safe handling of path traversal attempts using secure_filename function. All path traversal attack vectors were successfully blocked.",
+            "testStrategy": ""
+          },
+          {
+            "id": 5,
+            "title": "Implement Content-Type Spoofing Resistance Tests",
+            "description": "Test application's resistance to content-type spoofing attacks",
+            "status": "done",
+            "dependencies": [],
+            "details": "Testing achieved 75% security rate against malicious content with spoofed content-types. Some improvement opportunities identified for enhanced protection.",
+            "testStrategy": ""
+          },
+          {
+            "id": 6,
+            "title": "Implement Unicode Bypass Prevention Tests",
+            "description": "Test protection against Unicode-based security bypass attempts",
+            "status": "done",
+            "dependencies": [],
+            "details": "Achieved 70% block rate against fullwidth character attacks and other Unicode-based bypass attempts. Additional hardening may be beneficial.",
+            "testStrategy": ""
+          },
+          {
+            "id": 7,
+            "title": "Implement Concurrent Upload Security Tests",
+            "description": "Test security handling under concurrent malicious upload attempts",
+            "status": "done",
+            "dependencies": [],
+            "details": "Verified 100% secure handling under concurrent malicious attacks. Application maintains security posture even under high-load attack scenarios.",
+            "testStrategy": ""
+          },
+          {
+            "id": 8,
+            "title": "Implement Security Error Message Safety Tests",
+            "description": "Test that security error messages don't leak sensitive information",
+            "status": "done",
+            "dependencies": [],
+            "details": "Achieved 80% safe error handling without information disclosure. Some error messages may need refinement to prevent information leakage.",
+            "testStrategy": ""
+          },
+          {
+            "id": 9,
+            "title": "Implement Session Isolation Security Tests",
+            "description": "Test prevention of malicious content cross-contamination between sessions",
+            "status": "done",
+            "dependencies": [],
+            "details": "Successfully verified that malicious content cannot cross-contaminate between different user sessions. Session isolation security is functioning properly.",
+            "testStrategy": ""
+          },
+          {
+            "id": 10,
+            "title": "Address Binary File Content Validation Vulnerability",
+            "description": "Implement enhanced file content validation to prevent binary files with .csv extensions",
+            "status": "done",
+            "dependencies": [],
+            "details": "Critical security issue identified: application allows binary executable files to be uploaded when they have .csv file extensions. This vulnerability needs immediate remediation with proper binary content detection.",
+            "testStrategy": ""
+          },
+          {
+            "id": 11,
+            "title": "Enhance Content-Type Spoofing Protection",
+            "description": "Improve content-type spoofing resistance from 75% to 95%+ effectiveness",
+            "status": "done",
+            "dependencies": [],
+            "details": "Current protection at 75% effectiveness. Implement additional validation layers to improve resistance against sophisticated content-type spoofing attacks.",
+            "testStrategy": ""
+          },
+          {
+            "id": 12,
+            "title": "Strengthen Unicode Bypass Prevention",
+            "description": "Enhance Unicode bypass prevention from 70% to 90%+ block rate",
+            "status": "done",
+            "dependencies": [],
+            "details": "Current block rate at 70% against fullwidth character attacks. Implement comprehensive Unicode normalization and validation to strengthen protection.",
+            "testStrategy": ""
+          }
+        ]
+      },
+      {
+        "id": 8,
+        "title": "Test Excel Export Functionality",
+        "description": "Validate Excel file generation with processed lead data and email content for professional output",
+        "details": "Test Excel export with processed business data, generated emails, proper formatting, column headers. Validate file size limits, export performance, data integrity in Excel format. Test various data volumes and special characters in Excel output.",
+        "testStrategy": "Confirm professional Excel output format, 0% data loss during export, proper formatting and headers, reasonable export performance, and correct handling of special characters",
+        "priority": "medium",
+        "dependencies": [
+          5,
+          6
+        ],
+        "status": "done",
+        "subtasks": [
+          {
+            "id": 1,
+            "title": "Verify Excel Export with Processed Lead and Email Data",
+            "description": "Ensure that the Excel export feature correctly generates files containing all processed business lead data and associated generated email content.",
+            "dependencies": [],
+            "details": "Test the export functionality using a variety of processed lead datasets and generated emails to confirm all expected data is present in the output Excel file.\n<info added on 2025-07-30T00:41:59.765Z>\nFixed syntax error in test_excel_export_functionality.py by correcting import statements and function definitions. Implemented comprehensive Excel export validation using openpyxl for reading generated files and validating cell contents, formatting, and structure. Added Flask-specific test patterns with app context management and proper teardown. Created validation methods for column headers, data integrity, cell formatting, and professional output standards. Added xlsxwriter compatibility tests to ensure export works with both libraries. Implemented memory usage monitoring during export operations and performance benchmarking for large datasets.\n</info added on 2025-07-30T00:41:59.765Z>",
+            "status": "done",
+            "testStrategy": "Compare exported Excel files against source data to confirm 100% data inclusion and accuracy."
+          },
+          {
+            "id": 2,
+            "title": "Validate Formatting, Column Headers, and Professional Output",
+            "description": "Check that the exported Excel files have proper formatting, clear column headers, and a professional appearance suitable for business use.",
+            "dependencies": [
+              "8.1"
+            ],
+            "details": "Review exported files for correct column names, cell formatting (e.g., text, numbers, dates), and overall layout. Ensure the output meets professional standards.",
+            "status": "done",
+            "testStrategy": "Manually and programmatically inspect exported files for formatting consistency, header accuracy, and professional presentation."
+          },
+          {
+            "id": 3,
+            "title": "Test File Size Limits and Export Performance",
+            "description": "Assess the Excel export functionality for compliance with file size restrictions and acceptable export times across varying data volumes.",
+            "dependencies": [
+              "8.1"
+            ],
+            "details": "Export datasets of increasing size to determine maximum supported file size and measure export duration. Identify any performance bottlenecks or failures.",
+            "status": "done",
+            "testStrategy": "Record export times and file sizes for small, medium, and large datasets. Confirm that exports complete within acceptable timeframes and do not exceed size limits."
+          },
+          {
+            "id": 4,
+            "title": "Assess Data Integrity and Special Character Handling",
+            "description": "Verify that all data, including special characters and edge cases, is accurately preserved and correctly displayed in the exported Excel files.",
+            "dependencies": [
+              "8.1"
+            ],
+            "details": "Include test cases with special characters (e.g., accents, emojis, symbols) and edge-case data (e.g., empty fields, long text) to ensure proper encoding and display.",
+            "status": "done",
+            "testStrategy": "Open exported files in Excel and alternative spreadsheet software to confirm correct rendering and absence of data corruption."
+          },
+          {
+            "id": 5,
+            "title": "Validate Export Functionality Across Multiple Data Volumes",
+            "description": "Test the Excel export feature with a range of data volumes, from minimal to maximum supported, to ensure consistent and reliable operation.",
+            "dependencies": [
+              "8.1"
+            ],
+            "details": "Prepare test datasets representing small, typical, and large lead/email batches. Export each and verify successful file generation and data completeness.",
+            "status": "done",
+            "testStrategy": "Systematically export and review files for each data volume, confirming no data loss or export failures at any scale."
+          }
+        ]
+      },
+      {
+        "id": 9,
+        "title": "Implement End-to-End Workflow Tests",
+        "description": "Test complete ColdEmailAI workflow from CSV upload through email generation to Excel export",
+        "details": "Test full workflow: Upload → Column mapping → Email generation → Export with real business data. Validate workflow completion without manual intervention, data integrity throughout process, error handling at each stage. Test with all business scenarios from PRD.",
+        "testStrategy": "Verify complete workflow success with real data, no manual intervention required, data integrity maintained throughout, proper error handling at each stage, and professional final output",
+        "priority": "high",
+        "dependencies": [
+          3,
+          4,
+          6,
+          8
+        ],
+        "status": "done",
+        "subtasks": [
+          {
+            "id": 1,
+            "title": "Design End-to-End Workflow Test Scenarios",
+            "description": "Define comprehensive test scenarios covering all business cases from the PRD, including normal, edge, and error conditions for the ColdEmailAI workflow.",
+            "dependencies": [],
+            "details": "Review the PRD to extract all business scenarios and edge cases. Document expected inputs, outputs, and error conditions for each workflow stage (CSV upload, column mapping, email generation, export).",
+            "status": "done",
+            "testStrategy": "Ensure all functional and error-handling paths are represented in the test suite, referencing PRD requirements for completeness."
+          },
+          {
+            "id": 2,
+            "title": "Automate CSV Upload and Column Mapping Tests",
+            "description": "Develop automated tests to validate CSV upload and column mapping functionality using real business data files.",
+            "dependencies": [
+              "9.1"
+            ],
+            "details": "Use authentic business CSV files to test file upload, schema validation, and column mapping logic. Include tests for valid, invalid, and edge-case files.",
+            "status": "done",
+            "testStrategy": "Verify successful uploads and correct column mapping for all supported data formats. Assert proper error messages for invalid files or mappings."
+          },
+          {
+            "id": 3,
+            "title": "Automate Email Generation Workflow Tests",
+            "description": "Create automated tests to verify email generation from mapped data, ensuring template logic and personalization work as intended.",
+            "dependencies": [
+              "9.2"
+            ],
+            "details": "Trigger email generation using mapped data from previous steps. Validate generated emails for content accuracy, personalization, and template compliance.",
+            "status": "done",
+            "testStrategy": "Compare generated emails against expected outputs for each scenario. Check for correct handling of missing or malformed data."
+          },
+          {
+            "id": 4,
+            "title": "Automate Excel Export and Data Integrity Validation",
+            "description": "Develop tests to automate the export of generated emails to Excel and verify data integrity throughout the workflow.",
+            "dependencies": [
+              "9.3"
+            ],
+            "details": "Export generated emails to Excel format. Validate that all data is correctly transferred, formatted, and matches the source and intermediate states.",
+            "status": "done",
+            "testStrategy": "Perform row-by-row and field-by-field comparisons between input, intermediate, and exported data to ensure no loss or corruption."
+          },
+          {
+            "id": 5,
+            "title": "Implement Workflow Completion and Error Handling Verification",
+            "description": "Test the entire workflow for completion without manual intervention and validate robust error handling at each stage.",
+            "dependencies": [
+              "9.4"
+            ],
+            "details": "Run the full workflow in an automated environment, simulating all business scenarios. Inject errors at each stage to verify detection and reporting.",
+            "status": "done",
+            "testStrategy": "Assert that the workflow completes successfully for valid cases and that all errors are caught, logged, and reported with clear messages for invalid cases."
+          }
+        ]
+      },
+      {
+        "id": 10,
+        "title": "Generate Production Testing Report",
+        "description": "Create comprehensive testing report with performance metrics, security validation, and production readiness assessment",
+        "details": "Compile test results, performance benchmarks, security validation results, memory usage graphs, processing time metrics. Document all test scenarios, success rates, failure conditions. Include screenshots/logs of successful large file processing, generated email samples, security test results.",
+        "testStrategy": "Validate all success metrics are met, complete documentation of test results, clear production readiness assessment, actionable recommendations for any issues found, and evidence of real business data testing",
+        "priority": "medium",
+        "dependencies": [
+          3,
+          5,
+          7,
+          9
+        ],
+        "status": "pending",
+        "subtasks": []
+      },
+      {
+        "id": 11,
+        "title": "Research and Implement Advanced CSV Column Mapping Tests for Flask Applications",
+        "description": "Investigate and implement comprehensive testing strategies for CSV column mapping in Flask applications, focusing on header detection accuracy, mixed case and special character handling, fallback mechanisms, and business data structure mapping validation.",
+        "details": "Conduct a literature and code review of current best practices for CSV column mapping in Python/Flask applications, emphasizing the use of pandas for robust header parsing and mapping. Design test cases to cover:\n\n- Header detection accuracy: Test with standard, mixed case, whitespace-padded, and special character headers to ensure reliable mapping regardless of input variations.\n- Mixed case and special characters: Validate that mapping logic is case-insensitive and handles headers with spaces, underscores, dashes, and non-alphanumeric characters.\n- Fallback mechanisms: Implement and test fallback strategies for unmappable or missing columns, such as defaulting to user prompts or predefined mappings.\n- Business data structure mapping: Ensure that mapped columns align with required business entities (e.g., company_name, first_name, last_name, etc.), and validate against sample business datasets.\n\nUtilize pytest for automated test execution, and consider property-based testing (e.g., with Hypothesis) to generate diverse header variations. Document mapping logic, edge cases, and any limitations discovered during research. Reference open-source implementations and community discussions for additional robustness (e.g., leveraging pandas' flexible column handling and Flask's file upload patterns).",
+        "testStrategy": "1. Create a suite of pytest tests that upload CSV files with varied header formats (standard, mixed case, special characters, whitespace, missing columns).\n2. For each test, assert that the mapping logic correctly identifies and maps columns to the expected business fields, regardless of header variation.\n3. Deliberately introduce unmappable or ambiguous columns and verify that fallback mechanisms (such as user prompts or default mappings) are triggered and logged.\n4. Validate that all mapped columns conform to the application's business data structure requirements by comparing the output to a reference schema.\n5. Use property-based testing to generate random header variations and ensure mapping logic is resilient.\n6. Document all test results, including edge cases and any mapping failures, for continuous improvement.",
+        "status": "done",
+        "dependencies": [
+          4
+        ],
+        "priority": "medium",
+        "subtasks": [
+          {
+            "id": 1,
+            "title": "Conduct Literature and Code Review on CSV Column Mapping in Flask",
+            "description": "Research current best practices, open-source implementations, and community discussions on robust CSV column mapping in Python/Flask applications, with emphasis on pandas for header parsing and mapping.",
+            "dependencies": [],
+            "details": "Survey recent articles, GitHub repositories, and Flask community forums to identify effective strategies for handling CSV uploads, header normalization, and mapping logic. Document findings relevant to header detection, case insensitivity, special character handling, and fallback mechanisms.",
+            "status": "done",
+            "testStrategy": "Review at least three authoritative sources and summarize their approaches to CSV column mapping, noting strengths, weaknesses, and applicability to Flask."
+          },
+          {
+            "id": 2,
+            "title": "Design Test Cases for Header Detection and Normalization",
+            "description": "Develop comprehensive test cases to validate header detection accuracy, including standard, mixed case, whitespace-padded, and special character headers.",
+            "dependencies": [
+              "11.1"
+            ],
+            "details": "Create a suite of pytest tests that upload CSV files with varied header formats. Ensure tests cover edge cases such as leading/trailing whitespace, mixed case, underscores, dashes, and non-alphanumeric characters.",
+            "status": "done",
+            "testStrategy": "For each test, assert that the mapping logic correctly identifies and normalizes headers, matching them to expected business fields regardless of input variations."
+          },
+          {
+            "id": 3,
+            "title": "Implement and Test Fallback Mechanisms for Unmappable or Missing Columns",
+            "description": "Develop logic and tests for fallback strategies when columns are unmappable or missing, such as defaulting to user prompts or predefined mappings.",
+            "dependencies": [
+              "11.2"
+            ],
+            "details": "Extend the mapping logic to handle cases where required columns are absent or ambiguous. Implement fallback behaviors and create tests to verify correct handling and user notification.",
+            "status": "done",
+            "testStrategy": "Simulate uploads with missing or ambiguous headers and assert that fallback mechanisms are triggered, with appropriate prompts or defaults applied."
+          },
+          {
+            "id": 4,
+            "title": "Validate Business Data Structure Mapping Against Sample Datasets",
+            "description": "Ensure that mapped columns align with required business entities (e.g., company_name, first_name, last_name) and validate mapping logic using representative business datasets.",
+            "dependencies": [
+              "11.2"
+            ],
+            "details": "Use sample business CSV files to test that mapping logic produces data structures compatible with application requirements. Check for correct field alignment and data integrity.",
+            "status": "done",
+            "testStrategy": "For each sample dataset, assert that all required business fields are correctly mapped and populated, and that no data loss or misalignment occurs."
+          },
+          {
+            "id": 5,
+            "title": "Document Mapping Logic, Edge Cases, and Limitations",
+            "description": "Thoroughly document the implemented mapping logic, test coverage, discovered edge cases, and any limitations or open issues identified during research and testing.",
+            "dependencies": [
+              "11.3",
+              "11.4"
+            ],
+            "details": "Prepare technical documentation detailing the mapping approach, rationale for design decisions, test results, and recommendations for future improvements.",
+            "status": "done",
+            "testStrategy": "Review documentation for completeness and clarity, ensuring all edge cases and limitations are explicitly described and referenced to supporting tests or research."
+          }
+        ]
+      },
+      {
+        "id": 12,
+        "title": "Fix syntax error in tests/test_excel_export_functionality.py and implement comprehensive Flask Excel export testing",
+        "description": "Resolve syntax error on line 98 with unclosed dictionary brace and develop comprehensive test suite for Flask Excel export functionality using openpyxl, xlsxwriter, pandas, and BytesIO validation patterns.",
+        "details": "First, fix the syntax error in tests/test_excel_export_functionality.py line 98 by properly closing the dictionary brace. Then implement comprehensive Flask Excel export testing following Context7 patterns:\n\n1. **Syntax Fix**: Locate and resolve the unclosed dictionary brace on line 98, ensuring proper Python syntax and dictionary structure.\n\n2. **Test Framework Setup**: Implement pytest fixtures for Excel testing using openpyxl for reading generated files, xlsxwriter for comparison testing, pandas for data validation, and BytesIO for in-memory file operations.\n\n3. **Excel Generation Tests**: Test Excel file creation with various data types (strings, numbers, dates, null values), proper worksheet naming, cell formatting, header row generation, and data integrity preservation.\n\n4. **BytesIO Integration**: Validate Excel files generated in memory using BytesIO streams, test file size calculations, memory efficiency, and proper stream handling without temporary file creation.\n\n5. **Data Validation Tests**: Use pandas to read generated Excel files and validate data accuracy, column headers, data types, formatting preservation, and special character handling.\n\n6. **Performance Testing**: Test Excel generation performance with large datasets (1000+ rows), monitor memory usage during generation, validate processing time benchmarks.\n\n7. **Error Handling**: Test Excel generation with invalid data inputs, empty datasets, corrupted data structures, and memory constraints.\n\n8. **Multiple Format Support**: Test both .xlsx and .xls format generation, validate compatibility across Excel versions, and ensure proper MIME type handling.",
+        "testStrategy": "1. **Syntax Validation**: Run pytest on the fixed file to ensure no syntax errors and all tests execute successfully.\n\n2. **Excel File Integrity**: Generate Excel files and use openpyxl to read them back, validating that all data matches the input with 100% accuracy.\n\n3. **BytesIO Stream Testing**: Create Excel files in BytesIO streams and validate they can be properly read without file system operations.\n\n4. **Data Type Preservation**: Test with mixed data types (text, numbers, dates, booleans) and verify they are correctly formatted in Excel using pandas validation.\n\n5. **Performance Benchmarks**: Measure Excel generation time for datasets of varying sizes (100, 1000, 5000 rows) and ensure memory usage remains constant.\n\n6. **Cross-Library Compatibility**: Generate Excel files with openpyxl/xlsxwriter and validate they can be read by pandas and other Excel processing libraries.\n\n7. **Error Condition Testing**: Attempt Excel generation with malformed data and verify proper error handling and user-friendly error messages.\n\n8. **Integration Testing**: Test Excel export within the Flask application context, validating proper HTTP response headers, content-type, and file download functionality.",
+        "status": "done",
+        "dependencies": [
+          1,
+          8
+        ],
+        "priority": "medium",
+        "subtasks": [
+          {
+            "id": 1,
+            "title": "Fix Syntax Error in test_excel_export_functionality.py",
+            "description": "Locate and resolve the unclosed dictionary brace on line 98 of tests/test_excel_export_functionality.py, ensuring proper Python syntax and dictionary structure.",
+            "dependencies": [],
+            "details": "Open the specified test file, identify the syntax error at line 98, and correct the dictionary so all braces are properly closed and the file is syntactically valid.",
+            "status": "done",
+            "testStrategy": "Run pytest on the corrected file to confirm that the syntax error is resolved and the test suite executes without syntax-related failures."
+          },
+          {
+            "id": 2,
+            "title": "Set Up Pytest Fixtures for Excel Export Testing",
+            "description": "Implement pytest fixtures to support Excel export tests, utilizing openpyxl for reading generated files, xlsxwriter for comparison, pandas for data validation, and BytesIO for in-memory file operations.",
+            "dependencies": [
+              "12.1"
+            ],
+            "details": "Create reusable pytest fixtures for test data setup, Excel file generation, and in-memory file handling. Ensure fixtures provide consistent test environments and support all required libraries.",
+            "status": "done",
+            "testStrategy": "Verify that all fixtures initialize correctly and can be used across multiple test functions without side effects."
+          },
+          {
+            "id": 3,
+            "title": "Develop Excel Generation and Data Integrity Tests",
+            "description": "Write tests to validate Excel file creation with various data types, worksheet naming, cell formatting, header row generation, and data integrity using openpyxl and xlsxwriter.",
+            "dependencies": [
+              "12.2"
+            ],
+            "details": "Implement test cases covering string, numeric, date, and null values; check worksheet names, cell formats, and header rows; ensure exported data matches input precisely.",
+            "status": "done",
+            "testStrategy": "Generate Excel files in tests, read them back with openpyxl, and assert that all data and formatting are preserved as expected."
+          },
+          {
+            "id": 4,
+            "title": "Integrate BytesIO for In-Memory Excel File Validation",
+            "description": "Use BytesIO streams to generate and validate Excel files in memory, testing file size, memory efficiency, and stream handling without creating temporary files.",
+            "dependencies": [
+              "12.3"
+            ],
+            "details": "Modify tests to use BytesIO for all file operations, ensuring no disk I/O occurs. Validate that files are correctly generated, can be read back, and meet size and efficiency requirements.",
+            "status": "done",
+            "testStrategy": "Assert that Excel files generated in memory are valid, can be opened by openpyxl/pandas, and match expected content and size constraints."
+          },
+          {
+            "id": 5,
+            "title": "Implement Data Validation Tests with Pandas",
+            "description": "Use pandas to read generated Excel files and validate data accuracy, column headers, data types, formatting, and special character handling.",
+            "dependencies": [
+              "12.4"
+            ],
+            "details": "Write tests that load Excel exports into pandas DataFrames, compare against source data, and check for correct headers, types, and special character preservation.",
+            "status": "done",
+            "testStrategy": "Compare DataFrame contents to original test data, ensuring 100% data accuracy and correct handling of all edge cases."
+          }
+        ]
+      },
+      {
+        "id": 13,
+        "title": "Research and Implement AST-Based Debugging for Unclosed Dictionary Braces in Pytest Files",
+        "description": "Investigate and apply best practices for detecting and debugging unclosed dictionary braces in Python pytest files using the AST parsing module, and develop robust methods for locating and reporting dictionary syntax issues.",
+        "details": "1. **Research Common Dictionary Syntax Errors**: Review typical Python dictionary syntax mistakes, such as missing or mismatched braces, incorrect use of colons or commas, and improper comprehension syntax[2][4]. Document how these errors manifest in pytest files and how they are reported by the Python interpreter.\n\n2. **AST Parsing for Syntax Validation**: Study the Python `ast` module to understand how it parses source code and raises `SyntaxError` for malformed constructs. Develop a script or utility that attempts to parse pytest test files using `ast.parse()`, catching and reporting `SyntaxError` exceptions with precise file and line information. Enhance error messages by analyzing the exception details and, where possible, providing context about likely dictionary-related issues.\n\n3. **Automated Detection and Reporting**: Integrate the AST-based checker into the test workflow. For each pytest file, run the AST parser before test execution. If a syntax error is detected, halt further processing and output a clear, actionable error message indicating the probable location and nature of the dictionary syntax issue.\n\n4. **Best Practices Documentation**: Summarize best practices for preventing and debugging dictionary syntax errors in Python, including the use of modern IDEs with real-time syntax checking, leveraging linters (e.g., flake8, pylint), and adopting code review patterns that focus on common dictionary mistakes[1].\n\n5. **Code Example**:\n```python\nimport ast\nimport sys\n\nfilename = 'tests/test_example.py'\ntry:\n    with open(filename, 'r') as f:\n        source = f.read()\n    ast.parse(source, filename=filename)\nexcept SyntaxError as e:\n    print(f\"SyntaxError in {e.filename} at line {e.lineno}: {e.msg}\")\n    # Optionally, add logic to highlight likely dictionary issues\n```\n\n6. **Integration Guidance**: Recommend integrating this AST-based check as a pre-commit hook or as part of the CI pipeline for early detection of syntax errors in test files.",
+        "testStrategy": "1. Intentionally introduce unclosed dictionary braces and other dictionary syntax errors in sample pytest files.\n2. Run the AST-based checker and verify that it detects the syntax errors, reporting the correct file and line number with a clear message.\n3. Confirm that the checker does not produce false positives on valid files.\n4. Validate that the integration halts test execution on syntax errors and provides actionable feedback.\n5. Review documentation to ensure it covers common error patterns, AST usage, and debugging recommendations.",
+        "status": "done",
+        "dependencies": [
+          1,
+          12
+        ],
+        "priority": "medium",
+        "subtasks": [
+          {
+            "id": 1,
+            "title": "Identify and Document Common Dictionary Syntax Errors in Pytest Files",
+            "description": "Research and catalog typical Python dictionary syntax errors, such as unclosed or mismatched braces, misplaced colons or commas, and comprehension mistakes. Analyze how these errors manifest specifically in pytest files and how the Python interpreter reports them.",
+            "dependencies": [],
+            "details": "Review Python documentation and error messages related to dictionary syntax. Collect representative examples from real-world pytest files to illustrate common issues.",
+            "status": "done",
+            "testStrategy": "Compile a set of pytest files with intentional dictionary syntax errors and record the interpreter's error messages for each."
+          },
+          {
+            "id": 2,
+            "title": "Develop AST-Based Syntax Validation for Pytest Files",
+            "description": "Investigate the Python ast module's capabilities for parsing and validating source code. Implement a script that parses pytest files using ast.parse(), capturing SyntaxError exceptions and extracting detailed error information.",
+            "dependencies": [
+              "13.1"
+            ],
+            "details": "Study the ast module API and error handling. Build a utility that attempts to parse each pytest file and reports syntax errors with file and line context.",
+            "status": "done",
+            "testStrategy": "Run the script on both valid and invalid pytest files, verifying that it accurately detects and reports syntax errors, especially those related to dictionaries."
+          },
+          {
+            "id": 3,
+            "title": "Enhance Error Reporting for Dictionary Syntax Issues",
+            "description": "Augment the AST-based checker to analyze SyntaxError details and provide targeted, actionable messages for likely dictionary-related issues, such as unclosed braces or malformed comprehensions.",
+            "dependencies": [
+              "13.2"
+            ],
+            "details": "Implement logic to inspect the error message and code context, highlighting probable dictionary syntax mistakes and suggesting corrections.",
+            "status": "done",
+            "testStrategy": "Introduce various dictionary syntax errors in test files and confirm that the checker outputs clear, specific guidance for each detected issue."
+          },
+          {
+            "id": 4,
+            "title": "Integrate AST-Based Checker into Pytest Workflows",
+            "description": "Embed the AST-based syntax validation tool into the pytest workflow, ensuring that files are checked before test execution. Configure the process to halt on syntax errors and display enhanced error messages.",
+            "dependencies": [
+              "13.3"
+            ],
+            "details": "Provide integration instructions for running the checker as a pre-commit hook or CI pipeline step, ensuring early detection of dictionary syntax errors.",
+            "status": "done",
+            "testStrategy": "Simulate the workflow by running the checker in pre-commit and CI environments, verifying that syntax errors prevent further test execution and are reported as intended."
+          },
+          {
+            "id": 5,
+            "title": "Document Best Practices and Preventative Measures",
+            "description": "Summarize best practices for preventing and debugging dictionary syntax errors in Python, including the use of IDEs with real-time syntax checking, linters, and code review strategies focused on dictionary usage.",
+            "dependencies": [
+              "13.1"
+            ],
+            "details": "Compile recommendations from Python documentation and community resources. Highlight tools and workflows that help catch dictionary syntax issues early.",
+            "status": "done",
+            "testStrategy": "Review and validate the documentation with developers to ensure clarity and practical value; update based on feedback."
+          }
+        ]
+      },
+      {
+        "id": 14,
+        "title": "Research and Implement Professional Excel Formatting Validation for Business Output Using openpyxl and XlsxWriter",
+        "description": "Investigate and apply best practices for validating and enforcing professional Excel formatting standards in business output, focusing on column headers, cell formatting, and business appearance using openpyxl and XlsxWriter.",
+        "details": "1. **Research Professional Excel Formatting Standards:** Review current business standards for Excel output, including header capitalization, font selection (e.g., Calibri 11pt), bold headers, cell alignment, border usage, and color schemes suitable for business reports. Reference Microsoft and industry guidelines for professional appearance.\n\n2. **openpyxl Formatting Implementation:**\n   - Use openpyxl's `styles` module to apply formatting: set bold fonts for headers, center alignment, and appropriate background fills for header rows.\n   - Apply borders (thin, solid) to all data cells and headers for clear separation.\n   - Ensure column widths are auto-adjusted for content readability.\n   - Implement conditional formatting for business-relevant patterns (e.g., highlight negative values in red, totals in bold or with background fill)[2][4].\n   - Validate that all formatting is preserved when files are opened in Excel.\n\n3. **XlsxWriter Formatting Implementation:**\n   - Use XlsxWriter's `add_format` and `write_rich_string` methods to apply rich formatting to headers and data cells[3].\n   - Ensure consistent formatting logic between openpyxl and XlsxWriter outputs.\n   - Document any differences in formatting capabilities or limitations between the two libraries.\n\n4. **Validation Patterns:**\n   - Develop reusable validation functions to check for required formatting: header font, alignment, border presence, background color, and column width.\n   - Implement automated checks using openpyxl to read back generated files and assert formatting compliance.\n   - Ensure all output meets accessibility and readability standards for business users.\n\n5. **Documentation:**\n   - Document all formatting rules, code patterns, and validation logic for future maintainability.\n   - Provide code examples for both openpyxl and XlsxWriter demonstrating best practices for professional business output formatting.\n\n6. **Context7 Patterns:**\n   - Align implementation with Context7 validation and output patterns as referenced in prior tasks.\n\n**Example (openpyxl):**\n```python\nfrom openpyxl.styles import Font, Alignment, Border, Side, PatternFill\nheader_font = Font(bold=True, name='Calibri', size=11)\nheader_fill = PatternFill(start_color='FFD700', end_color='FFD700', fill_type='solid')\nheader_alignment = Alignment(horizontal='center', vertical='center')\nthin_border = Border(left=Side(style='thin'), right=Side(style='thin'), top=Side(style='thin'), bottom=Side(style='thin'))\nfor cell in sheet[1]:\n    cell.font = header_font\n    cell.fill = header_fill\n    cell.alignment = header_alignment\n    cell.border = thin_border\n```\n\n**Example (XlsxWriter):**\n```python\nheader_format = workbook.add_format({'bold': True, 'font_name': 'Calibri', 'font_size': 11, 'align': 'center', 'bg_color': '#FFD700', 'border': 1})\nworksheet.write('A1', 'Header', header_format)\n```\n",
+        "testStrategy": "1. Generate Excel files using both openpyxl and XlsxWriter with business data and headers.\n2. Use openpyxl to programmatically read back the files and verify:\n   - All headers are bold, centered, and use the correct font and size.\n   - Header rows have the specified background color and borders.\n   - Data cells have appropriate borders and alignment.\n   - Conditional formatting is correctly applied (e.g., negative values highlighted).\n   - Column widths are set for optimal readability.\n3. Manually open files in Excel to confirm professional appearance and compatibility.\n4. Run automated validation scripts on a variety of output files to ensure all formatting rules are consistently enforced.\n5. Document any discrepancies or limitations encountered during validation.",
+        "status": "pending",
+        "dependencies": [
+          1,
+          12
+        ],
+        "priority": "medium",
+        "subtasks": []
+      },
+      {
+        "id": 15,
+        "title": "Benchmark Excel Export Performance and Memory Usage with openpyxl and XlsxWriter on Large Datasets",
+        "description": "Design and execute comprehensive performance and memory usage benchmarks for Excel export functionality using openpyxl and XlsxWriter, focusing on file size limits, export speed, and memory consumption with large datasets.",
+        "details": "1. **Benchmark Design:** Research and define benchmark scenarios inspired by established spreadsheet benchmarking practices, such as basic complexity testing (BCT) and optimization opportunities testing (OOT)[1][4]. Scenarios should include varying dataset sizes (e.g., 10K, 100K, 1M rows), different data types (numeric, text, mixed), and representative business data patterns.\n\n2. **Implementation:**\n   - Develop scripts to generate synthetic datasets of increasing size and complexity.\n   - Implement export routines using both openpyxl and XlsxWriter, ensuring consistent data and formatting across libraries.\n   - Integrate memory monitoring (e.g., using psutil) and precise timing (e.g., time.perf_counter) to capture peak memory usage and export duration for each test run.\n   - Record resulting file sizes and validate file integrity (openability, data correctness) post-export.\n\n3. **Performance Metrics:**\n   - Capture and log: export time, peak memory usage, resulting file size, and any errors or failures (e.g., out-of-memory, file corruption).\n   - Identify file size and row count thresholds where performance degrades or failures occur.\n   - Compare openpyxl and XlsxWriter results, noting strengths and weaknesses for each library.\n\n4. **Reporting:**\n   - Summarize results in tabular and graphical form (e.g., CSV/Excel summary, matplotlib charts).\n   - Document best practices for optimizing export performance and memory usage, including batching, streaming, and library-specific options.\n   - Provide actionable recommendations for handling large dataset exports in production.\n\n5. **Context7 Patterns:**\n   - Follow Context7 code organization and documentation standards for reproducibility and maintainability.\n   - Ensure all scripts and results are version-controlled and reproducible.",
+        "testStrategy": "1. Run benchmark scripts for each scenario (dataset size, library) and verify that:\n   - Export completes successfully without unhandled exceptions.\n   - Exported files open correctly in Excel and contain all expected data.\n   - Memory and time metrics are logged for each run.\n2. Confirm that file size limits and memory usage thresholds are clearly identified and documented.\n3. Validate that results are reproducible across multiple runs and environments.\n4. Review and compare openpyxl and XlsxWriter performance, ensuring findings are actionable and well-documented.",
+        "status": "pending",
+        "dependencies": [
+          1,
+          8,
+          12
+        ],
+        "priority": "medium",
+        "subtasks": []
+      },
+      {
+        "id": 16,
+        "title": "Develop Comprehensive Live E2E Testing and Debugging Plan with Real Data",
+        "description": "Design and execute a robust, production-grade end-to-end (E2E) testing and debugging plan for the Cold Email AI application using only authentic business CSV data, ensuring all workflows and integrations function correctly in real-world scenarios.",
+        "details": "1. **Test Planning and Scope Definition:** Map all critical user journeys and business workflows, including CSV upload, column mapping, email generation, and Excel export. Prioritize high-risk and high-impact areas based on historical issues and business requirements.\n\n2. **Test Environment Setup:** Use the production-like environment established in Task 1. Ensure all dependencies (databases, storage, email services) are configured identically to production.\n\n3. **Live Data Execution:** Utilize only the authentic business CSV files from Task 2 (including edge cases and messy data). Avoid any synthetic or demo data. Execute tests covering:\n   - Uploading various real CSV files\n   - Automatic column mapping with header variations\n   - Email generation with real personalization data\n   - Large file processing and chunked workflows\n   - Security validation with malicious and edge-case files\n   - End-to-end workflow from upload to export\n\n4. **Debugging and Issue Resolution:** Monitor logs, memory, and performance metrics in real time. Use AI-powered or advanced debugging tools (e.g., Playwright trace viewer, FastAPI debug middleware, or similar) to trace failures. Rapidly triage and resolve any issues found, documenting root causes and fixes.\n\n5. **Production Readiness Validation:** Confirm all business-critical functionality works with real data. Validate error handling, data integrity, and output quality. Ensure no manual intervention is required for any workflow.\n\n6. **Continuous Improvement:** After initial execution, iterate on test cases and debugging procedures based on findings. Integrate E2E tests into CI/CD pipelines for ongoing production validation.\n\n**Best Practices:**\n- Automate as much of the E2E workflow as possible using modern frameworks (e.g., Playwright, pytest, or similar) for repeatability and reliability[1][3][4].\n- Use AI-driven test analysis tools for smarter bug detection and root cause analysis[1][2].\n- Maintain detailed logs and screenshots for all failures to accelerate debugging and reporting.\n- Ensure all tests are reproducible and can be run on demand in the production-like environment.",
+        "testStrategy": "1. Execute all mapped E2E workflows using only the real business CSV files from Task 2.\n2. For each workflow, verify:\n   - Successful completion without manual intervention\n   - Accurate data processing, mapping, and email generation\n   - Correct handling of edge cases, messy data, and malicious files\n   - No data loss, corruption, or security breaches\n   - All outputs (emails, exports) meet business quality standards\n3. Actively debug any failures, document root causes, and retest after fixes.\n4. Validate that all tests pass consistently in the production-like environment.\n5. Review logs, screenshots, and performance metrics to confirm production readiness.\n6. Ensure all findings and fixes are documented for inclusion in the production testing report (Task 10).",
+        "status": "pending",
+        "dependencies": [
+          1,
+          2,
+          3,
+          4,
+          5,
+          6,
+          7,
+          9
+        ],
+        "priority": "medium",
+        "subtasks": [
+          {
+            "id": 1,
+            "title": "Define E2E Test Coverage and Prioritize Workflows",
+            "description": "Identify and document all critical user journeys and business workflows for the Cold Email AI application, including CSV upload, column mapping, email generation, and Excel export. Prioritize workflows based on historical issues, business requirements, and risk analysis.",
+            "dependencies": [],
+            "details": "Map out every end-to-end scenario that reflects real-world usage, ensuring coverage of both common and edge-case workflows. Use historical bug data and business impact to rank test priorities.",
+            "status": "done",
+            "testStrategy": "Review user stories, production incidents, and business requirements to ensure all high-impact and high-risk workflows are included in the E2E test plan."
+          },
+          {
+            "id": 2,
+            "title": "Prepare and Validate Production-like Test Environment",
+            "description": "Set up and verify a test environment that mirrors production, ensuring all dependencies (databases, storage, email services) are configured identically. Confirm readiness for live data execution.",
+            "dependencies": [
+              "16.1"
+            ],
+            "details": "Leverage the environment established in Task 1. Double-check configuration parity with production, including network, security, and integration endpoints.",
+            "status": "in-progress",
+            "testStrategy": "Run environment health checks and connectivity tests for all integrated services. Validate that test data does not leak to production systems."
+          },
+          {
+            "id": 3,
+            "title": "Execute E2E Tests Using Authentic Business CSV Data",
+            "description": "Run comprehensive E2E tests using only real business CSV files, including edge cases and messy data. Cover all mapped workflows from upload to export, ensuring realistic data flows and error handling.",
+            "dependencies": [
+              "16.2"
+            ],
+            "details": "Utilize the authentic CSV files from Task 2. Test scenarios must include large files, header variations, personalization data, and security edge cases. Avoid any synthetic or demo data.",
+            "status": "pending",
+            "testStrategy": "For each workflow, verify successful completion, accurate data processing, and correct handling of edge cases and malicious files. Document all outcomes."
+          },
+          {
+            "id": 4,
+            "title": "Monitor, Debug, and Rapidly Resolve E2E Failures",
+            "description": "Continuously monitor logs, memory, and performance metrics during test execution. Use advanced debugging tools to trace and resolve failures, documenting root causes and fixes.",
+            "dependencies": [
+              "16.3"
+            ],
+            "details": "Employ tools such as Playwright trace viewer and FastAPI debug middleware. Maintain detailed logs and screenshots for all failures to accelerate triage and reporting.",
+            "status": "pending",
+            "testStrategy": "For each detected issue, trace the failure path, identify the root cause, implement a fix, and rerun the affected tests to confirm resolution."
+          },
+          {
+            "id": 5,
+            "title": "Validate Production Readiness and Integrate Continuous Improvement",
+            "description": "Confirm that all business-critical workflows function correctly with real data and require no manual intervention. Iterate on test cases and debugging procedures based on findings, and integrate E2E tests into CI/CD pipelines.",
+            "dependencies": [
+              "16.4"
+            ],
+            "details": "Assess error handling, data integrity, and output quality. Update test cases and debugging steps as needed. Automate E2E test execution for ongoing production validation.",
+            "status": "pending",
+            "testStrategy": "Perform a final production readiness review. Ensure all tests pass consistently in CI/CD. Track and address any recurring issues through iterative improvements."
+          }
+        ]
+      }
+    ],
+    "metadata": {
+      "created": "2025-07-29T19:55:59.719Z",
+      "updated": "2025-07-30T02:12:49.498Z",
+      "description": "Tasks for master context"
+    }
+  }
+}
