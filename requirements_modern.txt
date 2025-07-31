@@ -1,0 +1,9 @@
+# Modern async requirements for modern_app.py
+fastapi==0.104.1
+uvicorn[standard]==0.24.0
+pandas==2.0.3
+openai==0.27.8
+python-dotenv==1.0.0
+openpyxl==3.1.2
+python-multipart==0.0.6
+aiofiles==23.2.1
