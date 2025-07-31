@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Debug CSV Upload</title>
+    <style>
+        body { font-family: Arial; margin: 20px; }
+        .error { color: red; background: #ffe6e6; padding: 10px; margin: 10px 0; }
+        .success { color: green; background: #e6ffe6; padding: 10px; margin: 10px 0; }
+        form { margin: 20px 0; }
+        input, button { margin: 10px 0; padding: 10px; }
+        button { background: #007cba; color: white; border: none; cursor: pointer; }
+    </style>
+</head>
+<body>
+    <h1>Debug CSV Upload</h1>
+    
+    {% with messages = get_flashed_messages(with_categories=true) %}
+        {% if messages %}
+            {% for category, message in messages %}
+                <div class="{{ 'error' if category == 'error' else 'success' }}">
+                    <strong>{{ category.upper() }}:</strong> {{ message }}
+                </div>
+            {% endfor %}
+        {% endif %}
+    {% endwith %}
+    
+    <h2>Upload Test</h2>
+    <form action="/upload" method="post" enctype="multipart/form-data">
+        <div>
+            <label for="file">Select CSV or Excel file:</label><br>
+            <input type="file" name="file" id="file" accept=".csv,.xlsx,.xls" required>
+        </div>
+        <div>
+            <button type="submit">Upload File</button>
+        </div>
+    </form>
+    
+    <h2>Server Status</h2>
+    <button onclick="checkHealth()">Check Server Health</button>
+    <div id="health-result"></div>
+    
+    <script>
+        function checkHealth() {
+            fetch('/health')
+                .then(response => response.json())
+                .then(data => {
+                    document.getElementById('health-result').innerHTML = 
+                        '<div class="success">Server Status: ' + data.status + '</div>';
+                })
+                .catch(error => {
+                    document.getElementById('health-result').innerHTML = 
+                        '<div class="error">Server Error: ' + error + '</div>';
+                });
+        }
+    </script>
+</body>
+</html>

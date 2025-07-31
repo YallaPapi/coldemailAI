@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="en" data-bs-theme="dark">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Email Generation Complete - AI Cold Email Generator</title>
+    <link href="https://cdn.replit.com/agent/bootstrap-agent-dark-theme.min.css" rel="stylesheet">
+</head>
+<body>
+    <div class="container py-5">
+        <div class="row justify-content-center">
+            <div class="col-lg-8">
+                <div class="text-center mb-5">
+                    <div class="mb-4">
+                        <div class="display-1 text-success">✅</div>
+                    </div>
+                    <h1 class="display-4 fw-bold text-success">Success!</h1>
+                    <p class="lead text-muted">Your personalized emails have been generated</p>
+                </div>
+
+                <!-- Flash Messages -->
+                {% with messages = get_flashed_messages(with_categories=true) %}
+                    {% if messages %}
+                        {% for category, message in messages %}
+                            <div class="alert alert-{{ 'danger' if category == 'error' else 'success' }} alert-dismissible fade show" role="alert">
+                                {{ message }}
+                                <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+                            </div>
+                        {% endfor %}
+                    {% endif %}
+                {% endwith %}
+
+                <!-- Results Summary -->
+                <div class="card shadow-lg mb-4">
+                    <div class="card-body p-5 text-center">
+                        <h3 class="card-title mb-4">Generation Complete</h3>
+                        
+                        <div class="row mb-4">
+                            <div class="col-md-6">
+                                <div class="bg-success bg-opacity-10 p-4 rounded">
+                                    <h2 class="text-success mb-2">{{ result_count }}</h2>
+                                    <p class="mb-0">Personalized Emails Generated</p>
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="bg-info bg-opacity-10 p-4 rounded">
+                                    <h5 class="text-info mb-2">Ready for Download</h5>
+                                    <p class="mb-0">Excel file with all your emails</p>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <!-- Download Button -->
+                        <div class="d-grid gap-2 mb-4">
+                            <a href="{{ url_for('download_file') }}" class="btn btn-success btn-lg">
+                                <i class="bi bi-download"></i> Download {{ download_filename }}
+                            </a>
+                        </div>
+                        
+                        <div class="text-muted">
+                            <p><strong>What's included:</strong></p>
+                            <ul class="list-unstyled">
+                                <li>✅ All your original contact data</li>
+                                <li>✅ AI-generated personalized emails</li>
+                                <li>✅ Ready-to-use Excel format</li>
+                                <li>✅ Professional email templates</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Actions -->
+                <div class="text-center">
+                    <a href="{{ url_for('index') }}" class="btn btn-outline-secondary me-2">
+                        Generate More Emails
+                    </a>
+                    <button onclick="window.close()" class="btn btn-outline-secondary">
+                        Close
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>

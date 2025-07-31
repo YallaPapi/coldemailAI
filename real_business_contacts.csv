@@ -1,16 +1,4 @@
-First Name,Last Name,Company,Job Title,Industry,Email,City,State
-Jennifer,Martinez,Salesforce,VP of Sales,Software,jennifer.martinez@salesforce.com,San Francisco,CA
-David,Chen,Microsoft,Product Manager,Technology,david.chen@microsoft.com,Redmond,WA
-Sarah,Johnson,Goldman Sachs,Director of Operations,Finance,sarah.johnson@gs.com,New York,NY
-Michael,Brown,Johnson & Johnson,Marketing Director,Healthcare,michael.brown@jnj.com,New Brunswick,NJ
-Lisa,Williams,Amazon,Senior Engineer,E-commerce,lisa.williams@amazon.com,Seattle,WA
-Robert,Davis,Tesla,Manufacturing Manager,Automotive,robert.davis@tesla.com,Austin,TX
-Emily,Garcia,Pfizer,Research Scientist,Pharmaceuticals,emily.garcia@pfizer.com,New York,NY
-James,Rodriguez,Apple,UX Designer,Technology,james.rodriguez@apple.com,Cupertino,CA
-Maria,Wilson,Walmart,Supply Chain Director,Retail,maria.wilson@walmart.com,Bentonville,AR
-Christopher,Anderson,JPMorgan Chase,Investment Banker,Finance,christopher.anderson@jpmorgan.com,New York,NY
-Amanda,Taylor,Netflix,Content Strategy Manager,Entertainment,amanda.taylor@netflix.com,Los Gatos,CA
-Daniel,Thomas,Ford,Engineering Lead,Automotive,daniel.thomas@ford.com,Dearborn,MI
-Jessica,Jackson,Meta,Data Scientist,Technology,jessica.jackson@meta.com,Menlo Park,CA
-Ryan,White,Boeing,Aerospace Engineer,Aerospace,ryan.white@boeing.com,Seattle,WA
-Michelle,Harris,Coca-Cola,Brand Manager,Consumer Goods,michelle.harris@coca-cola.com,Atlanta,GA
+First Name,Company,Job Title,Industry,City,State,Country
+John,Acme Corp,Lead Developer,Software,San Francisco,CA,United States
+Sarah,TechStart Inc,VP Engineering,Technology,Austin,TX,United States
+Michael,DataDriven LLC,CTO,Analytics,Seattle,WA,United States

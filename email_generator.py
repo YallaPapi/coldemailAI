@@ -247,7 +247,7 @@ Make each email sound completely different - vary greetings, structure, tone, an
                 ],
                 max_tokens=200,
                 temperature=0.8,
-                timeout=20  # Reduced timeout to prevent hanging
+                timeout=60  # Increased timeout for reliability
             )
             
             content = response.choices[0].message.content

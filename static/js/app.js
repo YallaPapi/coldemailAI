@@ -55,11 +55,13 @@ document.addEventListener('DOMContentLoaded', function() {
                 submitBtn.style.display = 'none';
                 loadingDiv.style.display = 'block';
                 
-                // Disable all form inputs to prevent changes during processing
-                const formInputs = mappingForm.querySelectorAll('input, select, button');
-                formInputs.forEach(input => {
-                    input.disabled = true;
-                });
+                // Disable form inputs AFTER a delay to ensure form data is sent first
+                setTimeout(() => {
+                    const formInputs = mappingForm.querySelectorAll('input, select, button');
+                    formInputs.forEach(input => {
+                        input.disabled = true;
+                    });
+                }, 200); // 200ms delay to ensure form submission completes
             }
         });
     }

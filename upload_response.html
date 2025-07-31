@@ -1,0 +1,295 @@
+<!DOCTYPE html>
+<html lang="en" data-bs-theme="dark">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Map Your Columns - AI Cold Email Generator</title>
+    <link href="https://cdn.replit.com/agent/bootstrap-agent-dark-theme.min.css" rel="stylesheet">
+</head>
+<body>
+    <div class="container py-5">
+        <div class="row justify-content-center">
+            <div class="col-lg-10">
+                <div class="text-center mb-4">
+                    <h1 class="display-5 fw-bold">Step 2: Map Your Columns</h1>
+                    <p class="lead text-muted">Tell us which columns contain which information</p>
+                    <div class="bg-dark-subtle p-3 rounded">
+                        <strong>File:</strong> test.csv &nbsp;|&nbsp; <strong>Rows:</strong> 2
+                    </div>
+                </div>
+
+                <!-- Flash Messages -->
+                
+                    
+                
+
+                <form action="/generate_emails" method="post">
+                    <div class="card">
+                        <div class="card-header">
+                            <h4 class="mb-0">Column Mapping</h4>
+                            <small class="text-muted">Fields marked with * are required</small>
+                        </div>
+                        <div class="card-body">
+                            <div class="row">
+                                <!-- Required Fields -->
+                                <div class="col-md-6">
+                                    <h5 class="text-primary mb-3">Required Fields</h5>
+                                    
+                                    <div class="mb-3">
+                                        <label class="form-label">First Name *</label>
+                                        <select name="map_first_name" class="form-select" required>
+                                            <option value="">-- Select Column --</option>
+                                            
+                                                <option value="Name" 
+                                                    >
+                                                    Name
+                                                </option>
+                                            
+                                                <option value="Company" 
+                                                    >
+                                                    Company
+                                                </option>
+                                            
+                                                <option value="Title" 
+                                                    >
+                                                    Title
+                                                </option>
+                                            
+                                                <option value="Industry" 
+                                                    >
+                                                    Industry
+                                                </option>
+                                            
+                                        </select>
+                                    </div>
+                                    
+                                    <div class="mb-3">
+                                        <label class="form-label">Company Name *</label>
+                                        <select name="map_company_name" class="form-select" required>
+                                            <option value="">-- Select Column --</option>
+                                            
+                                                <option value="Name"
+                                                    >
+                                                    Name
+                                                </option>
+                                            
+                                                <option value="Company"
+                                                    >
+                                                    Company
+                                                </option>
+                                            
+                                                <option value="Title"
+                                                    >
+                                                    Title
+                                                </option>
+                                            
+                                                <option value="Industry"
+                                                    >
+                                                    Industry
+                                                </option>
+                                            
+                                        </select>
+                                    </div>
+                                </div>
+                                
+                                <!-- Optional Fields -->
+                                <div class="col-md-6">
+                                    <h5 class="text-info mb-3">Optional Fields</h5>
+                                    
+                                    <div class="mb-3">
+                                        <label class="form-label">Job Title</label>
+                                        <select name="map_job_title" class="form-select">
+                                            <option value="none">-- Skip This Field --</option>
+                                            
+                                                <option value="Name"
+                                                    >
+                                                    Name
+                                                </option>
+                                            
+                                                <option value="Company"
+                                                    >
+                                                    Company
+                                                </option>
+                                            
+                                                <option value="Title"
+                                                    >
+                                                    Title
+                                                </option>
+                                            
+                                                <option value="Industry"
+                                                    >
+                                                    Industry
+                                                </option>
+                                            
+                                        </select>
+                                    </div>
+                                    
+                                    <div class="mb-3">
+                                        <label class="form-label">Industry</label>
+                                        <select name="map_industry" class="form-select">
+                                            <option value="none">-- Skip This Field --</option>
+                                            
+                                                <option value="Name"
+                                                    >
+                                                    Name
+                                                </option>
+                                            
+                                                <option value="Company"
+                                                    >
+                                                    Company
+                                                </option>
+                                            
+                                                <option value="Title"
+                                                    >
+                                                    Title
+                                                </option>
+                                            
+                                                <option value="Industry"
+                                                    >
+                                                    Industry
+                                                </option>
+                                            
+                                        </select>
+                                    </div>
+                                    
+                                    <div class="mb-3">
+                                        <label class="form-label">City</label>
+                                        <select name="map_city" class="form-select">
+                                            <option value="none">-- Skip This Field --</option>
+                                            
+                                                <option value="Name"
+                                                    >
+                                                    Name
+                                                </option>
+                                            
+                                                <option value="Company"
+                                                    >
+                                                    Company
+                                                </option>
+                                            
+                                                <option value="Title"
+                                                    >
+                                                    Title
+                                                </option>
+                                            
+                                                <option value="Industry"
+                                                    >
+                                                    Industry
+                                                </option>
+                                            
+                                        </select>
+                                    </div>
+                                    
+                                    <div class="mb-3">
+                                        <label class="form-label">State</label>
+                                        <select name="map_state" class="form-select">
+                                            <option value="none">-- Skip This Field --</option>
+                                            
+                                                <option value="Name"
+                                                    >
+                                                    Name
+                                                </option>
+                                            
+                                                <option value="Company"
+                                                    >
+                                                    Company
+                                                </option>
+                                            
+                                                <option value="Title"
+                                                    >
+                                                    Title
+                                                </option>
+                                            
+                                                <option value="Industry"
+                                                    >
+                                                    Industry
+                                                </option>
+                                            
+                                        </select>
+                                    </div>
+                                    
+                                    <div class="mb-3">
+                                        <label class="form-label">Country</label>
+                                        <select name="map_country" class="form-select">
+                                            <option value="none">-- Skip This Field --</option>
+                                            
+                                                <option value="Name"
+                                                    >
+                                                    Name
+                                                </option>
+                                            
+                                                <option value="Company"
+                                                    >
+                                                    Company
+                                                </option>
+                                            
+                                                <option value="Title"
+                                                    >
+                                                    Title
+                                                </option>
+                                            
+                                                <option value="Industry"
+                                                    >
+                                                    Industry
+                                                </option>
+                                            
+                                        </select>
+                                    </div>
+                                    
+                                    <div class="mb-3">
+                                        <label class="form-label">Company Description</label>
+                                        <select name="map_company_description" class="form-select">
+                                            <option value="none">-- Skip This Field --</option>
+                                            
+                                                <option value="Name"
+                                                    >
+                                                    Name
+                                                </option>
+                                            
+                                                <option value="Company"
+                                                    >
+                                                    Company
+                                                </option>
+                                            
+                                                <option value="Title"
+                                                    >
+                                                    Title
+                                                </option>
+                                            
+                                                <option value="Industry"
+                                                    >
+                                                    Industry
+                                                </option>
+                                            
+                                        </select>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="card-footer">
+                            <div class="d-flex justify-content-between">
+                                <a href="/" class="btn btn-secondary">← Start Over</a>
+                                <div>
+                                    <button type="submit" class="btn btn-success btn-lg" id="generateEmailsBtn">
+                                        Generate 2 Personalized Emails →
+                                    </button>
+                                    <div id="emailLoadingState" style="display: none;" class="text-center mt-3">
+                                        <div class="spinner-border text-success" role="status">
+                                            <span class="visually-hidden">Loading...</span>
+                                        </div>
+                                        <p class="mt-2 text-success">Generating personalized emails with AI... This may take up to 2-3 minutes for larger files.</p>
+                                        <small class="text-muted">Please wait while we create unique emails for each lead.</small>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="/static/js/app.js"></script>
+</body>
+</html>
